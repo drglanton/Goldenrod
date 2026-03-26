@@ -6,300 +6,324 @@
 <title>Prospect Hunter — Goldenrod Solutions</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f5f4; min-height: 100vh; padding: 2rem 1rem; }
-.app { max-width: 600px; margin: 0 auto; }
-.logo { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; }
-.logo-mark { width: 40px; height: 40px; background: #b45309; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-.logo-mark svg { width: 22px; height: 22px; fill: white; }
-.logo-text { font-size: 17px; font-weight: 600; color: #1c1917; }
-.logo-sub { font-size: 12px; color: #78716c; margin-top: 1px; }
-.card { background: white; border-radius: 14px; border: 1px solid #e7e5e4; padding: 1.5rem; margin-bottom: 1rem; }
-.card h2 { font-size: 15px; font-weight: 600; color: #1c1917; margin-bottom: 4px; }
-.card p { font-size: 13px; color: #78716c; margin-bottom: 1.25rem; line-height: 1.6; }
-.section-label { font-size: 11px; font-weight: 600; color: #a8a29e; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; margin-top: 1.25rem; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #0a0a0a; min-height: 100vh; padding: 2rem 1rem; color: #ffffff; }
+.app { max-width: 620px; margin: 0 auto; }
+
+.logo { display: flex; align-items: center; gap: 14px; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #2a2a2a; }
+.logo img { width: 52px; height: 52px; border-radius: 50%; }
+.logo-text { font-size: 20px; font-weight: 800; color: #f5a623; letter-spacing: 0.02em; }
+.logo-sub { font-size: 12px; color: #aaaaaa; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+
+.card { background: #161616; border-radius: 12px; border: 1px solid #2e2e2e; padding: 1.5rem; margin-bottom: 1rem; }
+.card h2 { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
+.card p { font-size: 14px; color: #bbbbbb; margin-bottom: 1.25rem; line-height: 1.7; }
+
+.section-label { font-size: 11px; font-weight: 800; color: #f5a623; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; margin-top: 1.25rem; }
 .section-label:first-child { margin-top: 0; }
+
 .field { margin-bottom: 10px; }
-.field label { display: block; font-size: 13px; color: #57534e; margin-bottom: 5px; font-weight: 500; }
-.field input, .field select { width: 100%; padding: 9px 12px; font-size: 14px; border: 1px solid #d6d3d1; border-radius: 8px; background: white; color: #1c1917; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
-.field input:focus, .field select:focus { border-color: #b45309; box-shadow: 0 0 0 3px rgba(180,83,9,0.1); }
-.field input::placeholder { color: #a8a29e; }
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.field label { display: block; font-size: 13px; color: #cccccc; margin-bottom: 6px; font-weight: 600; }
+.field input { width: 100%; padding: 11px 14px; font-size: 14px; font-weight: 500; border: 1px solid #333333; border-radius: 8px; background: #1f1f1f; color: #ffffff; outline: none; transition: border-color 0.15s; }
+.field input:focus { border-color: #f5a623; box-shadow: 0 0 0 2px rgba(245,166,35,0.2); }
+.field input::placeholder { color: #555555; }
+
 .row3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-.preset { font-size: 12px; padding: 4px 11px; border: 1px solid #d6d3d1; border-radius: 20px; background: #fafaf9; color: #57534e; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-.preset:hover { border-color: #b45309; color: #92400e; background: #fef3c7; }
-.preset.active { border-color: #b45309; color: #92400e; background: #fef3c7; font-weight: 600; }
-.divider { height: 1px; background: #f5f5f4; margin: 1.25rem 0; }
-.count-row { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; }
-.count-row label { font-size: 13px; color: #57534e; font-weight: 500; white-space: nowrap; }
-.count-row input[type=range] { flex: 1; accent-color: #b45309; }
-.count-val { font-size: 15px; font-weight: 600; color: #1c1917; min-width: 36px; text-align: right; }
-.preview-box { background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.25rem; font-size: 13px; color: #57534e; }
-.preview-box span { color: #b45309; font-weight: 600; }
-.launch-btn { width: 100%; padding: 14px; font-size: 15px; font-weight: 600; background: #b45309; color: white; border: none; border-radius: 10px; cursor: pointer; transition: background 0.15s, transform 0.1s; }
-.launch-btn:hover { background: #92400e; }
+.preset { font-size: 13px; padding: 6px 14px; border: 1px solid #333333; border-radius: 20px; background: #1f1f1f; color: #dddddd; cursor: pointer; transition: all 0.15s; white-space: nowrap; font-weight: 600; }
+.preset:hover { border-color: #f5a623; color: #f5a623; }
+.preset.active { border-color: #f5a623; color: #000000; background: #f5a623; font-weight: 800; }
+
+.radius-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+.radius-btn { padding: 12px 8px; text-align: center; font-size: 13px; font-weight: 700; border: 1px solid #333333; border-radius: 8px; background: #1f1f1f; color: #dddddd; cursor: pointer; transition: all 0.15s; line-height: 1.3; }
+.radius-btn:hover { border-color: #f5a623; color: #f5a623; }
+.radius-btn.active { border-color: #f5a623; color: #000000; background: #f5a623; }
+.radius-sub { font-size: 11px; margin-top: 3px; font-weight: 500; color: #888888; }
+.radius-btn.active .radius-sub { color: #7a5200; }
+
+.center-toggle { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.toggle-btn { padding: 11px 14px; text-align: left; font-size: 13px; font-weight: 600; border: 1px solid #333333; border-radius: 8px; background: #1f1f1f; color: #dddddd; cursor: pointer; transition: all 0.15s; }
+.toggle-btn:hover { border-color: #f5a623; color: #f5a623; }
+.toggle-btn.active { border-color: #f5a623; color: #f5a623; background: rgba(245,166,35,0.1); font-weight: 700; }
+
+.custom-coords { display: none; margin-top: 8px; }
+.custom-coords.visible { display: block; }
+.divider { height: 1px; background: #242424; margin: 1.25rem 0; }
+
+.count-row { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; }
+.count-row label { font-size: 13px; color: #cccccc; font-weight: 600; white-space: nowrap; }
+.count-row input[type=range] { flex: 1; accent-color: #f5a623; }
+.count-val { font-size: 20px; font-weight: 800; color: #f5a623; min-width: 40px; text-align: right; }
+
+.preview-box { background: #0f0f0f; border: 1px solid #2a2a2a; border-left: 3px solid #f5a623; border-radius: 8px; padding: 14px 16px; margin-bottom: 1.25rem; font-size: 14px; line-height: 2; }
+.preview-box .prow { display: flex; gap: 12px; align-items: baseline; }
+.preview-box .pkey { color: #f5a623; min-width: 70px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+.preview-box .pval { color: #ffffff; font-weight: 700; font-size: 15px; }
+.preview-box .pnorm { color: #cccccc; font-weight: 500; }
+.preview-empty { color: #666666; font-size: 13px; font-style: italic; }
+
+.launch-btn { width: 100%; padding: 17px; font-size: 16px; font-weight: 800; background: #f5a623; color: #000000; border: none; border-radius: 10px; cursor: pointer; transition: background 0.15s, transform 0.1s; text-transform: uppercase; letter-spacing: 0.1em; }
+.launch-btn:hover { background: #e09418; }
 .launch-btn:active { transform: scale(0.99); }
-.launch-btn:disabled { background: #d6d3d1; color: #a8a29e; cursor: not-allowed; transform: none; }
-.status { border-radius: 10px; padding: 14px 16px; font-size: 13px; line-height: 1.6; margin-bottom: 1rem; }
-.status.success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
-.status.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-.status.loading { background: #fafaf9; color: #57534e; border: 1px solid #e7e5e4; }
-.status-title { font-weight: 600; margin-bottom: 3px; }
-.history-label { font-size: 11px; font-weight: 600; color: #a8a29e; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-.history-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f5f5f4; font-size: 13px; cursor: pointer; transition: background 0.1s; border-radius: 4px; }
+.launch-btn:disabled { background: #2a2a2a; color: #555555; cursor: not-allowed; transform: none; }
+
+.status { border-radius: 10px; padding: 14px 16px; font-size: 14px; line-height: 1.6; margin-bottom: 1rem; }
+.status.success { background: #0d1f0d; color: #4ade80; border: 1px solid #166534; }
+.status.error { background: #1f0d0d; color: #f87171; border: 1px solid #7f1d1d; }
+.status.loading { background: #161616; color: #bbbbbb; border: 1px solid #2e2e2e; }
+.status-title { font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+
+.history-label { font-size: 11px; font-weight: 800; color: #f5a623; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; }
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #222222; cursor: pointer; }
 .history-item:last-child { border-bottom: none; }
-.history-item:hover { background: #fafaf9; }
-.history-left { display: flex; align-items: center; gap: 8px; }
-.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-.history-type { font-weight: 600; color: #1c1917; }
-.history-loc { color: #78716c; font-size: 12px; }
-.history-right { text-align: right; }
-.history-meta { color: #a8a29e; font-size: 12px; }
-.relaunch { font-size: 11px; color: #b45309; font-weight: 600; margin-top: 2px; }
-.sheet-link { display: inline-block; margin-top: 10px; font-size: 13px; color: #b45309; text-decoration: none; font-weight: 500; }
+.history-item:hover .history-type { color: #f5a623; }
+.history-left { display: flex; align-items: center; gap: 10px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.history-type { font-weight: 700; color: #ffffff; font-size: 14px; transition: color 0.1s; }
+.history-loc { color: #888888; font-size: 12px; margin-top: 3px; font-weight: 500; }
+.history-right { text-align: right; flex-shrink: 0; margin-left: 12px; }
+.history-meta { color: #666666; font-size: 12px; font-weight: 500; }
+.relaunch { font-size: 11px; color: #f5a623; font-weight: 800; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.sheet-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 14px; color: #f5a623; text-decoration: none; font-weight: 700; }
 .sheet-link:hover { text-decoration: underline; }
-.spinner { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.35); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; vertical-align: middle; }
+
+.geocode-note { font-size: 12px; color: #888888; margin-top: 8px; min-height: 18px; font-weight: 500; }
+
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,0,0,0.3); border-top-color: #000; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 <div class="app">
+
   <div class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.81 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.91 19.07 22 15.76 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.95 2.55 2 6.82 2 12c0 3.76 2.09 7.07 5.22 8.78L6 22h5V2.05z"/></svg>
-    </div>
+    <img src="https://assets.cdn.filesafe.space/FK0yd5F7fKlJxa3apwnh/media/69b8c014ad027674db3909a2.png" alt="GS" onerror="this.style.display='none'" />
     <div>
       <div class="logo-text">Prospect Hunter</div>
-      <div class="logo-sub">Goldenrod Solutions</div>
+      <div class="logo-sub">Goldenrod Solutions Agency</div>
     </div>
   </div>
 
   <div class="card">
-    <h2>New prospecting run</h2>
-    <p>Configure your target and hit launch. Results go to your Google Sheet and email in 5-10 minutes.</p>
+    <h2>New Prospecting Run</h2>
+    <p>Configure your target market and launch. Results go to your Google Sheet and email within 5-10 minutes.</p>
 
-    <div class="section-label">Service type</div>
+    <div class="section-label">Service Type</div>
     <div class="presets" id="type-presets">
-      <span class="preset active" onclick="selectType(this, 'HVAC')">HVAC</span>
-      <span class="preset" onclick="selectType(this, 'Plumber')">Plumber</span>
-      <span class="preset" onclick="selectType(this, 'Roofer')">Roofer</span>
-      <span class="preset" onclick="selectType(this, 'Electrician')">Electrician</span>
-      <span class="preset" onclick="selectType(this, 'Pest Control')">Pest Control</span>
-      <span class="preset" onclick="selectType(this, 'Landscaper')">Landscaper</span>
-      <span class="preset" onclick="selectType(this, 'Painter')">Painter</span>
-      <span class="preset" onclick="selectType(this, 'Handyman')">Handyman</span>
-      <span class="preset" onclick="selectType(this, 'Carpet Cleaner')">Carpet Cleaner</span>
-      <span class="preset" onclick="selectType(this, 'Pool Service')">Pool Service</span>
+      <span class="preset active" onclick="selectType(this,'HVAC')">HVAC</span>
+      <span class="preset" onclick="selectType(this,'Plumber')">Plumber</span>
+      <span class="preset" onclick="selectType(this,'Roofer')">Roofer</span>
+      <span class="preset" onclick="selectType(this,'Electrician')">Electrician</span>
+      <span class="preset" onclick="selectType(this,'Pest Control')">Pest Control</span>
+      <span class="preset" onclick="selectType(this,'Landscaper')">Landscaper</span>
+      <span class="preset" onclick="selectType(this,'Painter')">Painter</span>
+      <span class="preset" onclick="selectType(this,'Handyman')">Handyman</span>
+      <span class="preset" onclick="selectType(this,'Carpet Cleaner')">Carpet Cleaner</span>
+      <span class="preset" onclick="selectType(this,'Pool Service')">Pool Service</span>
     </div>
-
     <div class="field">
-      <label>Custom type (overrides selection above)</label>
+      <label>Custom Type (overrides selection above)</label>
       <input type="text" id="custom-type" placeholder="e.g. Chimney Sweep, Tree Service, Garage Door..." oninput="updatePreview()" />
     </div>
 
     <div class="divider"></div>
-    <div class="section-label">Target location</div>
-
+    <div class="section-label">Target Location</div>
     <div class="row3">
       <div class="field">
         <label>City</label>
-        <input type="text" id="city" placeholder="Atlanta" oninput="updatePreview()" />
+        <input type="text" id="city" placeholder="Atlanta" oninput="onLocationChange()" />
       </div>
       <div class="field">
         <label>State</label>
-        <input type="text" id="state" placeholder="GA" maxlength="2" oninput="updatePreview()" />
+        <input type="text" id="state" placeholder="GA" maxlength="2" oninput="onLocationChange()" />
       </div>
       <div class="field">
         <label>Zip (optional)</label>
         <input type="text" id="zip" placeholder="30301" maxlength="5" oninput="updatePreview()" />
       </div>
     </div>
-
     <div class="field">
-      <label>County (optional — use instead of or with city)</label>
-      <input type="text" id="county" placeholder="e.g. Henry County" oninput="updatePreview()" />
+      <label>County (optional — use instead of or alongside city)</label>
+      <input type="text" id="county" placeholder="e.g. Henry County" oninput="onLocationChange()" />
     </div>
 
     <div class="divider"></div>
-    <div class="section-label">Search preview</div>
-    <div class="preview-box" id="preview">Enter a location above to see your search term</div>
+    <div class="section-label">Search Radius (optional)</div>
+    <div class="radius-options">
+      <div class="radius-btn active" onclick="selectRadius(this,0)" data-miles="0">No Limit<div class="radius-sub">All results</div></div>
+      <div class="radius-btn" onclick="selectRadius(this,15)" data-miles="15">15 Miles<div class="radius-sub">Drive visits</div></div>
+      <div class="radius-btn" onclick="selectRadius(this,25)" data-miles="25">25 Miles<div class="radius-sub">Day trips</div></div>
+      <div class="radius-btn" onclick="selectRadius(this,50)" data-miles="50">50 Miles<div class="radius-sub">Wide area</div></div>
+    </div>
 
-    <div class="section-label">Businesses to scrape</div>
+    <div id="radius-center-section" style="display:none;">
+      <div class="section-label">Radius Center Point</div>
+      <div class="center-toggle">
+        <div class="toggle-btn active" id="center-auto" onclick="selectCenter('auto')">Use my entered location (auto-detect coordinates)</div>
+        <div class="toggle-btn" id="center-home" onclick="selectCenter('home')">Use home base — McDonough, GA (33.4471, -84.1466)</div>
+        <div class="toggle-btn" id="center-custom" onclick="selectCenter('custom')">Enter custom coordinates</div>
+      </div>
+      <div class="custom-coords" id="custom-coords-fields">
+        <div class="row2">
+          <div class="field"><label>Latitude</label><input type="text" id="custom-lat" placeholder="33.4471" oninput="updatePreview()" /></div>
+          <div class="field"><label>Longitude</label><input type="text" id="custom-lng" placeholder="-84.1466" oninput="updatePreview()" /></div>
+        </div>
+      </div>
+      <div class="geocode-note" id="geocode-note"></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Search Preview</div>
+    <div class="preview-box" id="preview">
+      <div class="preview-empty">Enter a location above to see your search term</div>
+    </div>
+
+    <div class="section-label">Businesses to Scrape</div>
     <div class="count-row">
-      <input type="range" id="count-slider" min="5" max="100" step="5" value="20" oninput="document.getElementById('count-val').textContent = this.value" />
+      <label>Volume</label>
+      <input type="range" id="count-slider" min="5" max="100" step="5" value="20" oninput="document.getElementById('count-val').textContent=this.value; updatePreview();" />
       <span class="count-val" id="count-val">20</span>
     </div>
 
-    <button class="launch-btn" id="launch-btn" onclick="launch()">Launch prospecting run</button>
+    <button class="launch-btn" id="launch-btn" onclick="launch()">Launch Prospecting Run</button>
   </div>
 
   <div id="status-box" style="display:none;"></div>
 
   <div class="card" id="history-card" style="display:none;">
-    <div class="history-label">Recent runs — click to relaunch</div>
+    <div class="history-label">Recent Runs — Click Any to Relaunch</div>
     <div id="history-list"></div>
     <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1sM6VVpBuEzCzmwr43a9bQRPiR0CaTPFLfCKSE6rmlig/edit?gid=0#gid=0" target="_blank">Open Google Sheet &rarr;</a>
   </div>
-</div>
 
+</div>
 <script>
 const WEBHOOK = 'https://n8n.srv1445265.hstgr.cloud/webhook/f2657be6-ed1e-4d84-af29-b69f7a8b0f3e';
-const STORAGE_KEY = 'prospect_hunter_runs';
-let selectedType = 'HVAC';
+const STORAGE_KEY = 'gsa_prospect_hunter_v2';
+const HOME_COORDS = { lat: 33.4471, lng: -84.1466 };
+let selectedType = 'HVAC', selectedRadius = 0, centerMode = 'auto', geocodedCoords = null, geocodeTimer = null;
 
 function selectType(el, type) {
   document.querySelectorAll('#type-presets .preset').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  selectedType = type;
-  document.getElementById('custom-type').value = '';
-  updatePreview();
+  el.classList.add('active'); selectedType = type;
+  document.getElementById('custom-type').value = ''; updatePreview();
 }
-
-function getType() {
-  const custom = document.getElementById('custom-type').value.trim();
-  return custom || selectedType;
+function getType() { const c = document.getElementById('custom-type').value.trim(); return c || selectedType; }
+function selectRadius(el, miles) {
+  document.querySelectorAll('.radius-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active'); selectedRadius = miles;
+  document.getElementById('radius-center-section').style.display = miles > 0 ? 'block' : 'none';
+  if (miles > 0 && centerMode === 'auto') scheduleGeocode(); updatePreview();
 }
-
+function selectCenter(mode) {
+  centerMode = mode;
+  ['auto','home','custom'].forEach(m => document.getElementById('center-'+m).classList.toggle('active', m === mode));
+  document.getElementById('custom-coords-fields').className = 'custom-coords' + (mode === 'custom' ? ' visible' : '');
+  if (mode === 'auto') scheduleGeocode(); updatePreview();
+}
+function onLocationChange() {
+  geocodedCoords = null;
+  if (selectedRadius > 0 && centerMode === 'auto') scheduleGeocode(); updatePreview();
+}
+function scheduleGeocode() {
+  clearTimeout(geocodeTimer);
+  document.getElementById('geocode-note').textContent = 'Looking up coordinates...';
+  geocodeTimer = setTimeout(doGeocode, 800);
+}
+async function doGeocode() {
+  const city = document.getElementById('city').value.trim(), state = document.getElementById('state').value.trim(), county = document.getElementById('county').value.trim();
+  const q = (county ? county + ' ' : city + ' ') + state;
+  if (!q.trim()) { document.getElementById('geocode-note').textContent = 'Enter a location first'; return; }
+  try {
+    const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
+    const d = await r.json();
+    if (d && d[0]) {
+      geocodedCoords = { lat: parseFloat(d[0].lat), lng: parseFloat(d[0].lon) };
+      document.getElementById('geocode-note').textContent = 'Center found: ' + geocodedCoords.lat.toFixed(4) + ', ' + geocodedCoords.lng.toFixed(4);
+      updatePreview();
+    } else { document.getElementById('geocode-note').textContent = 'Could not find coordinates — try custom coordinates below'; }
+  } catch(e) { document.getElementById('geocode-note').textContent = 'Geocoding unavailable — use custom coordinates if needed'; }
+}
+function getCenter() {
+  if (selectedRadius === 0) return null;
+  if (centerMode === 'home') return HOME_COORDS;
+  if (centerMode === 'custom') { const lat = parseFloat(document.getElementById('custom-lat').value), lng = parseFloat(document.getElementById('custom-lng').value); return (!isNaN(lat) && !isNaN(lng)) ? { lat, lng } : null; }
+  return geocodedCoords;
+}
 function buildSearchTerm() {
-  const type = getType();
-  const city = document.getElementById('city').value.trim();
-  const state = document.getElementById('state').value.trim().toUpperCase();
-  const zip = document.getElementById('zip').value.trim();
-  const county = document.getElementById('county').value.trim();
-
+  const type = getType(), city = document.getElementById('city').value.trim(), state = document.getElementById('state').value.trim().toUpperCase(), zip = document.getElementById('zip').value.trim(), county = document.getElementById('county').value.trim();
   if (!city && !county && !state) return null;
-
-  let location = '';
-  if (county) {
-    location = county;
-    if (state) location += ', ' + state;
-  } else {
-    if (city) location = city;
-    if (state) location += (city ? ', ' : '') + state;
-    if (zip) location += ' ' + zip;
-  }
-
-  return type + ' near ' + location;
+  let loc = county ? county : city;
+  if (state) loc += (loc ? ', ' : '') + state;
+  if (!county && zip) loc += ' ' + zip;
+  return type + ' near ' + loc;
 }
-
 function buildLocationLabel() {
-  const city = document.getElementById('city').value.trim();
-  const state = document.getElementById('state').value.trim().toUpperCase();
-  const zip = document.getElementById('zip').value.trim();
-  const county = document.getElementById('county').value.trim();
-  const parts = [county || city, state, zip].filter(Boolean);
-  return parts.join(', ') || 'No location';
+  const city = document.getElementById('city').value.trim(), state = document.getElementById('state').value.trim().toUpperCase(), zip = document.getElementById('zip').value.trim(), county = document.getElementById('county').value.trim();
+  return [county || city, state, zip].filter(Boolean).join(', ') || 'No location';
 }
-
 function updatePreview() {
-  const term = buildSearchTerm();
-  const box = document.getElementById('preview');
-  if (term) {
-    box.innerHTML = 'Search: <span>"' + term + '"</span>';
-  } else {
-    box.innerHTML = 'Enter a location above to see your search term';
+  const term = buildSearchTerm(), box = document.getElementById('preview'), count = document.getElementById('count-val').textContent;
+  if (!term) { box.innerHTML = '<div class="preview-empty">Enter a location above to see your search term</div>'; return; }
+  let html = '<div class="prow"><span class="pkey">Search</span><span class="pval">' + term + '</span></div>';
+  if (selectedRadius > 0) {
+    const center = getCenter(), cLabel = centerMode === 'home' ? 'McDonough, GA' : centerMode === 'custom' ? 'custom point' : 'entered location';
+    html += '<div class="prow"><span class="pkey">Radius</span><span class="pnorm">' + selectedRadius + ' miles from ' + cLabel + '</span></div>';
+    if (center) html += '<div class="prow"><span class="pkey">Coords</span><span class="pnorm">' + center.lat.toFixed(4) + ', ' + center.lng.toFixed(4) + '</span></div>';
   }
-  if (document.getElementById('custom-type').value.trim()) {
-    document.querySelectorAll('#type-presets .preset').forEach(p => p.classList.remove('active'));
-  }
+  html += '<div class="prow"><span class="pkey">Volume</span><span class="pnorm">' + count + ' businesses</span></div>';
+  box.innerHTML = html;
+  if (document.getElementById('custom-type').value.trim()) document.querySelectorAll('#type-presets .preset').forEach(p => p.classList.remove('active'));
 }
-
 function showStatus(type, title, msg) {
-  const box = document.getElementById('status-box');
-  box.style.display = 'block';
+  const box = document.getElementById('status-box'); box.style.display = 'block';
   box.innerHTML = '<div class="status ' + type + '"><div class="status-title">' + title + '</div>' + msg + '</div>';
 }
-
-function loadRuns() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
-}
-
-function saveRun(run) {
-  const runs = loadRuns();
-  runs.unshift(run);
-  const trimmed = runs.slice(0, 10);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
-  renderHistory(trimmed);
-}
-
-function relaunch(run) {
-  document.getElementById('city').value = run.city || '';
-  document.getElementById('state').value = run.state || '';
-  document.getElementById('zip').value = run.zip || '';
-  document.getElementById('county').value = run.county || '';
-  document.getElementById('count-slider').value = run.count || 20;
-  document.getElementById('count-val').textContent = run.count || 20;
-  document.getElementById('custom-type').value = '';
-  document.querySelectorAll('#type-presets .preset').forEach(p => {
-    p.classList.remove('active');
-    if (p.textContent === run.type) { p.classList.add('active'); selectedType = run.type; }
-  });
-  if (!document.querySelector('#type-presets .preset.active')) {
-    document.getElementById('custom-type').value = run.type;
-  }
-  updatePreview();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
+function loadRuns() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; } }
+function saveRun(run) { const runs = [run, ...loadRuns()].slice(0, 10); localStorage.setItem(STORAGE_KEY, JSON.stringify(runs)); renderHistory(runs); }
 function renderHistory(runs) {
-  if (!runs || runs.length === 0) return;
-  const card = document.getElementById('history-card');
-  const list = document.getElementById('history-list');
-  card.style.display = 'block';
-  list.innerHTML = runs.map((r, i) => {
-    const color = r.success ? '#16a34a' : '#dc2626';
-    return '<div class="history-item" onclick="relaunch(runs[' + i + '])">' +
-      '<div class="history-left"><span class="dot" style="background:' + color + '"></span>' +
-      '<div><div class="history-type">' + r.type + '</div>' +
-      '<div class="history-loc">' + r.location + '</div></div></div>' +
-      '<div class="history-right"><div class="history-meta">' + r.count + ' biz &middot; ' + r.time + '</div>' +
-      '<div class="relaunch">Click to relaunch &rarr;</div></div></div>';
+  if (!runs || !runs.length) return;
+  document.getElementById('history-card').style.display = 'block';
+  document.getElementById('history-list').innerHTML = runs.map((r, i) => {
+    const color = r.success ? '#22c55e' : '#ef4444', radiusPart = r.radius ? ' &middot; ' + r.radius + ' mi' : '';
+    return '<div class="history-item" onclick="relaunchIdx(' + i + ')"><div class="history-left"><span class="dot" style="background:' + color + '"></span><div><div class="history-type">' + r.type + '</div><div class="history-loc">' + r.location + radiusPart + '</div></div></div><div class="history-right"><div class="history-meta">' + r.count + ' biz &middot; ' + r.time + '</div><div class="relaunch">Relaunch &rarr;</div></div></div>';
   }).join('');
-  list.runs = runs;
 }
-
+function relaunchIdx(i) {
+  const r = loadRuns()[i]; if (!r) return;
+  document.getElementById('city').value = r.city || ''; document.getElementById('state').value = r.state || ''; document.getElementById('zip').value = r.zip || ''; document.getElementById('county').value = r.county || '';
+  document.getElementById('count-slider').value = r.count || 20; document.getElementById('count-val').textContent = r.count || 20;
+  document.getElementById('custom-type').value = '';
+  let typeMatched = false;
+  document.querySelectorAll('#type-presets .preset').forEach(p => { p.classList.remove('active'); if (p.textContent.trim() === r.type) { p.classList.add('active'); selectedType = r.type; typeMatched = true; } });
+  if (!typeMatched) document.getElementById('custom-type').value = r.type;
+  document.querySelectorAll('.radius-btn').forEach(b => { b.classList.remove('active'); if (parseInt(b.dataset.miles) === (r.radius || 0)) b.classList.add('active'); });
+  selectedRadius = r.radius || 0; document.getElementById('radius-center-section').style.display = selectedRadius > 0 ? 'block' : 'none';
+  geocodedCoords = null; if (selectedRadius > 0 && centerMode === 'auto') scheduleGeocode();
+  updatePreview(); window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 async function launch() {
-  const searchTerm = buildSearchTerm();
-  const count = parseInt(document.getElementById('count-slider').value);
-  const btn = document.getElementById('launch-btn');
-  const type = getType();
-  const city = document.getElementById('city').value.trim();
-  const state = document.getElementById('state').value.trim().toUpperCase();
-  const zip = document.getElementById('zip').value.trim();
-  const county = document.getElementById('county').value.trim();
-
-  if (!searchTerm) {
-    showStatus('error', 'Location required', 'Please enter at least a city, state, or county before launching.');
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Launching...';
-  showStatus('loading', 'Workflow starting', 'Sending to n8n now. Results arrive by email in 5-10 minutes.');
-
+  const searchTerm = buildSearchTerm(), count = parseInt(document.getElementById('count-slider').value), btn = document.getElementById('launch-btn'), type = getType();
+  if (!searchTerm) { showStatus('error', 'Location Required', 'Please enter at least a city, state, or county.'); return; }
+  const center = getCenter();
+  if (selectedRadius > 0 && !center) { showStatus('error', 'Coordinates Needed', 'A radius is selected but no center coordinates found. Switch to home base or enter custom coordinates.'); return; }
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Launching...';
+  showStatus('loading', 'Workflow Starting', 'Sending to n8n now. Results arrive by email in 5-10 minutes.');
+  const payload = { city: searchTerm, maxResults: count };
+  if (selectedRadius > 0 && center) { payload.lat = center.lat; payload.lng = center.lng; payload.radiusMeters = Math.round(selectedRadius * 1609.34); }
   try {
-    const res = await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ city: searchTerm, maxResults: count })
-    });
-
+    const res = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     if (res.ok || res.status === 200) {
-      showStatus('success', 'Run launched', 'Searching for <strong>' + searchTerm + '</strong> — scraping ' + count + ' businesses. Check your email in 5-10 minutes.');
-      saveRun({ type, city, state, zip, county, count, location: buildLocationLabel(), time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), success: true });
-    } else {
-      showStatus('error', 'Webhook error ' + res.status, 'Make sure your n8n workflow is activated.');
-      saveRun({ type, city, state, zip, county, count, location: buildLocationLabel(), time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), success: false });
-    }
-  } catch(e) {
-    showStatus('error', 'Could not reach n8n', 'Check that your n8n instance is running and the workflow is active.');
-    saveRun({ type, city, state, zip, county, count, location: buildLocationLabel(), time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), success: false });
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = 'Launch prospecting run';
+      let msg = 'Searching <strong>' + searchTerm + '</strong> — ' + count + ' businesses.';
+      if (selectedRadius > 0) msg += ' Within ' + selectedRadius + ' miles.'; msg += ' Check email in 5-10 min.';
+      showStatus('success', 'Run Launched', msg);
+      saveRun({ type, count, radius: selectedRadius, city: document.getElementById('city').value.trim(), state: document.getElementById('state').value.trim().toUpperCase(), zip: document.getElementById('zip').value.trim(), county: document.getElementById('county').value.trim(), location: buildLocationLabel(), time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), success: true });
+    } else { showStatus('error', 'Webhook Error ' + res.status, 'Make sure your n8n workflow is activated and published.'); }
+  } catch(e) { showStatus('error', 'Could Not Reach n8n', 'Check that your n8n instance is running and the workflow is active.'); }
+  btn.disabled = false; btn.innerHTML = 'Launch Prospecting Run';
 }
-
 renderHistory(loadRuns());
 </script>
 </body>
