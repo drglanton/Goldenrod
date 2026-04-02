@@ -292,6 +292,34 @@
     font-weight: 500; letter-spacing: .05em;
   }
   footer strong { color: var(--gold); }
+  #btn-route {
+    display: none;
+    background: var(--navy-card);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    color: var(--gold);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 15px;
+    width: 100%;
+    transition: background .15s, color .15s;
+    text-decoration: none;
+    text-align: center;
+  }
+  #btn-route:hover { background: var(--gold); color: var(--navy-deep); }
+  #btn-route.visible { display: block; }
+  .lead-card .distance {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--success);
+    text-transform: uppercase;
+  }
 </style>
 </head>
 <body>
@@ -350,6 +378,7 @@
       <div class="spinner"></div>
       <span id="status-msg">Connecting to n8n…</span>
     </div>
+    <a id="btn-route" target="_blank">🗺️ Open Route in Google Maps</a>
     <div id="results"></div>
   </div>
   <footer>
@@ -416,6 +445,7 @@
     const btn = document.getElementById('btn-find');
     btn.disabled = true; btn.classList.add('pulsing'); btn.textContent = '⏳ Searching…';
     document.getElementById('results').innerHTML = '';
+    document.getElementById('btn-route').classList.remove('visible');
     setStatus('Sending to n8n webhook…');
 
     const payload = {
@@ -441,11 +471,30 @@
 
   function renderResults(data, niche) {
     const container = document.getElementById('results');
+    const originLat = document.getElementById('lat').value;
+    const originLng = document.getElementById('lng').value;
     const leads = Array.isArray(data) ? data : Array.isArray(data.leads) ? data.leads : [];
     if (!leads.length) {
       container.innerHTML = `<div class="error-card">No results found. Try a wider radius or different niche.</div>`;
+      document.getElementById('btn-route').classList.remove('visible');
       return;
     }
+
+    // Build Google Maps route URL
+    const withCoords = leads.filter(b => b.location?.lat && b.location?.lng);
+    if (withCoords.length > 0 && originLat && originLng) {
+      const origin = `${originLat},${originLng}`;
+      const stops = withCoords.slice(0, 9);
+      const destination = stops[stops.length - 1];
+      const waypoints = stops.slice(0, -1).map(b => `${b.location.lat},${b.location.lng}`).join('|');
+      const destStr = `${destination.location.lat},${destination.location.lng}`;
+      let mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destStr}&travelmode=driving`;
+      if (waypoints) mapsUrl += `&waypoints=${encodeURIComponent(waypoints)}`;
+      const routeBtn = document.getElementById('btn-route');
+      routeBtn.href = mapsUrl;
+      routeBtn.classList.add('visible');
+    }
+
     container.innerHTML = `<div class="results-header"><span class="rh-label">Results</span><span class="rh-count">${leads.length} Leads Found</span></div>`;
     leads.forEach((biz, i) => {
       const name = biz.title || biz.name || 'Unknown Business';
@@ -453,6 +502,7 @@
       const phone = biz.phone || biz.phoneNumber || '';
       const rating = biz.totalScore || biz.rating || '';
       const reviews = biz.reviewsCount || biz.reviewCount || '';
+      const dist = biz.distance_miles ? `${biz.distance_miles} mi away` : '';
       const card = document.createElement('div');
       card.className = 'lead-card';
       card.style.animationDelay = `${i * 35}ms`;
@@ -462,7 +512,10 @@
         <div class="address">📍 ${escHtml(address)}</div>
         <div class="bottom-row">
           <div class="phone">${phone ? '📞 ' + escHtml(phone) : '<span class="no-phone">No phone listed</span>'}</div>
-          ${rating ? `<div class="rating"><span class="star">★</span> ${rating}${reviews ? ' · ' + reviews + ' reviews' : ''}</div>` : ''}
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+            ${rating ? `<div class="rating"><span class="star">★</span> ${rating}${reviews ? ' · ' + reviews : ''}</div>` : ''}
+            ${dist ? `<div class="distance">📍 ${dist}</div>` : ''}
+          </div>
         </div>`;
       container.appendChild(card);
     });
