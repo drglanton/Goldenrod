@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>StreetPro · Goldenrod Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy:      #0C1A35;
+    --navy-deep: #081228;
+    --navy-card: #112040;
+    --navy-border:#1E3260;
+    --gold:      #F5C518;
+    --gold-dark: #D4A800;
+    --gold-glow: rgba(245,197,24,0.18);
+    --white:     #FFFFFF;
+    --off-white: #C8D6F0;
+    --muted:     #5A7AAF;
+    --success:   #2ECC8C;
+    --danger:    #E05050;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy-deep);
+    color: var(--white);
+    font-family: var(--font-body);
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 47px, rgba(245,197,24,.04) 48px),
+      repeating-linear-gradient(90deg, transparent, transparent 47px, rgba(245,197,24,.04) 48px);
+    pointer-events: none; z-index: 0;
+  }
+  .app {
+    position: relative; z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0 48px;
+  }
+  .header-banner {
+    background: var(--gold);
+    padding: 6px 20px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--navy-deep);
+  }
+  header {
+    background: var(--navy);
+    padding: 24px 20px 20px;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: var(--gold);
+    opacity: .06;
+    border-radius: 50%;
+    filter: blur(30px);
+  }
+  .brand-line {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 8vw, 40px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  h1 em { color: var(--gold); font-style: normal; }
+  .header-sub {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .body { padding: 20px 20px 0; display: flex; flex-direction: column; gap: 16px; }
+  .card {
+    background: var(--navy-card);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  input[type="text"], input[type="url"] {
+    background: var(--navy-deep);
+    border: 1px solid var(--navy-border);
+    border-radius: 8px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    width: 100%;
+  }
+  input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+  input::placeholder { color: var(--muted); }
+  input[readonly] { font-size: 13px; }
+  .gps-row { display: flex; gap: 10px; align-items: flex-end; }
+  .gps-row .field { flex: 1; }
+  #btn-gps {
+    background: transparent;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    color: var(--gold);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 12px 13px;
+    white-space: nowrap;
+    transition: background .15s, color .15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  #btn-gps:hover { background: var(--gold); color: var(--navy-deep); }
+  #btn-gps:disabled { opacity: .4; cursor: not-allowed; }
+  .gps-status { font-size: 11px; color: var(--muted); min-height: 14px; font-weight: 500; }
+  .gps-status.ok  { color: var(--success); }
+  .gps-status.err { color: var(--danger); }
+  .radius-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--navy-border);
+    background: var(--navy-deep);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+    text-transform: uppercase;
+  }
+  .pill.active { border-color: var(--gold); color: var(--navy-deep); background: var(--gold); }
+  #btn-find {
+    background: var(--gold);
+    border: none;
+    border-radius: 10px;
+    color: var(--navy-deep);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 17px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: opacity .15s, transform .1s;
+    box-shadow: 0 4px 20px rgba(245,197,24,.3);
+  }
+  #btn-find:hover { opacity: .9; }
+  #btn-find:active { transform: scale(.98); }
+  #btn-find:disabled { opacity: .4; cursor: not-allowed; box-shadow: none; }
+  #btn-find::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(245,197,24,.5); }
+  #btn-find.pulsing::after { animation: ringpulse 1.3s ease-out infinite; }
+  @keyframes ringpulse { to { box-shadow: 0 0 0 20px rgba(245,197,24,0); } }
+  .config-toggle {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none; border: none;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    padding: 0;
+  }
+  .config-toggle:hover { color: var(--gold); }
+  .config-section { display: none; }
+  .config-section.open { display: flex; flex-direction: column; gap: 12px; }
+  .status-strip {
+    display: none;
+    background: var(--navy-card);
+    border: 1px solid var(--navy-border);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--off-white);
+    align-items: center;
+    gap: 12px;
+  }
+  .status-strip.visible { display: flex; }
+  .spinner {
+    width: 16px; height: 16px; flex-shrink: 0;
+    border: 2px solid var(--navy-border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #results { display: flex; flex-direction: column; gap: 10px; }
+  .results-header { display: flex; justify-content: space-between; align-items: center; }
+  .results-header .rh-label {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .results-header .rh-count {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 700;
+    color: var(--gold); letter-spacing: .05em;
+  }
+  .lead-card {
+    background: var(--navy-card);
+    border: 1px solid var(--navy-border);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex; flex-direction: column; gap: 5px;
+    animation: slideUp .28s ease both;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .lead-card:hover { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold-glow); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .lead-card .niche-badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 9px; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px;
+    background: var(--gold); color: var(--navy-deep);
+    margin-bottom: 2px; align-self: flex-start;
+  }
+  .lead-card .name {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 700;
+    color: var(--white); letter-spacing: .01em;
+    text-transform: uppercase; line-height: 1.2;
+  }
+  .lead-card .address { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .lead-card .bottom-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 4px; padding-top: 8px;
+    border-top: 1px solid var(--navy-border);
+  }
+  .lead-card .phone { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--gold); letter-spacing: .05em; }
+  .lead-card .no-phone { font-size: 11px; color: var(--muted); }
+  .lead-card .rating { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .lead-card .star { color: var(--gold); }
+  .error-card {
+    background: rgba(224,80,80,.08);
+    border: 1px solid rgba(224,80,80,.3);
+    border-radius: 10px; padding: 16px;
+    font-size: 13px; font-weight: 500; color: var(--danger);
+  }
+  footer {
+    text-align: center; padding: 24px 20px 0;
+    font-size: 11px; color: var(--muted);
+    font-weight: 500; letter-spacing: .05em;
+  }
+  footer strong { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header-banner">Georgia Launch · Limited Spots Available</div>
+  <header>
+    <div class="brand-line">Goldenrod Solutions Agency · Field Tool</div>
+    <h1>Hyper-Local<br/><em>Prospecting</em></h1>
+    <p class="header-sub">GPS-powered lead finder · Apify + n8n</p>
+  </header>
+  <div class="body">
+    <div class="card">
+      <div class="field">
+        <label>Business Niche</label>
+        <input type="text" id="niche" placeholder="e.g. HVAC, Plumber, Roofer…" value="HVAC" />
+      </div>
+      <div class="gps-row">
+        <div class="field">
+          <label>Latitude</label>
+          <input type="text" id="lat" placeholder="33.7490" readonly />
+        </div>
+        <div class="field">
+          <label>Longitude</label>
+          <input type="text" id="lng" placeholder="-84.3880" readonly />
+        </div>
+        <button id="btn-gps" onclick="getLocation()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          </svg>
+          GPS
+        </button>
+      </div>
+      <div class="gps-status" id="gps-status">Tap GPS to detect your location</div>
+      <div class="field">
+        <label>Search Radius</label>
+        <div class="radius-row">
+          <div class="pill" data-miles="1" onclick="setRadius(this)">1 mi</div>
+          <div class="pill active" data-miles="3" onclick="setRadius(this)">3 mi</div>
+          <div class="pill" data-miles="5" onclick="setRadius(this)">5 mi</div>
+          <div class="pill" data-miles="10" onclick="setRadius(this)">10 mi</div>
+        </div>
+      </div>
+      <button class="config-toggle" onclick="toggleConfig()">
+        <span id="config-arrow">▸</span> Webhook Settings
+      </button>
+      <div class="config-section" id="config-section">
+        <div class="field">
+          <label>n8n Webhook URL</label>
+          <input type="url" id="webhook-url" placeholder="https://your-n8n.app/webhook/leads" />
+        </div>
+      </div>
+      <button id="btn-find" onclick="findLeads()">⚡ Find Leads Now</button>
+    </div>
+    <div class="status-strip" id="status-strip">
+      <div class="spinner"></div>
+      <span id="status-msg">Connecting to n8n…</span>
+    </div>
+    <div id="results"></div>
+  </div>
+  <footer>
+    <strong>Goldenrod Solutions Agency</strong><br/>
+    Call or Text Thomas · 404-877-2899
+  </footer>
+</div>
+<script>
+  let selectedRadius = 3;
+  let configOpen = false;
+
+  function getLocation() {
+    const btn = document.getElementById('btn-gps');
+    const status = document.getElementById('gps-status');
+    btn.disabled = true;
+    status.className = 'gps-status';
+    status.textContent = 'Acquiring signal…';
+    if (!navigator.geolocation) { showGpsError('Geolocation not supported.'); btn.disabled = false; return; }
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        document.getElementById('lat').value = pos.coords.latitude.toFixed(6);
+        document.getElementById('lng').value = pos.coords.longitude.toFixed(6);
+        status.className = 'gps-status ok';
+        status.textContent = `✓ Lock acquired · ±${Math.round(pos.coords.accuracy)}m accuracy`;
+        btn.disabled = false;
+      },
+      err => { showGpsError(err.message); btn.disabled = false; },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  }
+
+  function showGpsError(msg) {
+    const s = document.getElementById('gps-status');
+    s.className = 'gps-status err';
+    s.textContent = '✗ ' + msg;
+  }
+
+  function setRadius(el) {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    selectedRadius = parseInt(el.dataset.miles);
+  }
+
+  function toggleConfig() {
+    configOpen = !configOpen;
+    document.getElementById('config-section').classList.toggle('open', configOpen);
+    document.getElementById('config-arrow').textContent = configOpen ? '▾' : '▸';
+  }
+
+  function setStatus(msg, visible = true) {
+    document.getElementById('status-msg').textContent = msg;
+    document.getElementById('status-strip').classList.toggle('visible', visible);
+  }
+
+  async function findLeads() {
+    const niche   = document.getElementById('niche').value.trim();
+    const lat     = document.getElementById('lat').value.trim();
+    const lng     = document.getElementById('lng').value.trim();
+    const webhook = document.getElementById('webhook-url').value.trim();
+    if (!niche)       return alert('Please enter a business niche.');
+    if (!lat || !lng) return alert('Please get your GPS location first.');
+    if (!webhook)     return alert('Please enter your n8n Webhook URL in Webhook Settings.');
+
+    const btn = document.getElementById('btn-find');
+    btn.disabled = true; btn.classList.add('pulsing'); btn.textContent = '⏳ Searching…';
+    document.getElementById('results').innerHTML = '';
+    setStatus('Sending to n8n webhook…');
+
+    const payload = {
+      niche, latitude: parseFloat(lat), longitude: parseFloat(lng),
+      radius_miles: selectedRadius, radius_meters: Math.round(selectedRadius * 1609.34),
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      setStatus('n8n is triggering Apify run…');
+      const res = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error(`Webhook returned HTTP ${res.status}`);
+      const data = await res.json();
+      setStatus('', false);
+      renderResults(data, niche);
+    } catch (err) {
+      setStatus('', false);
+      document.getElementById('results').innerHTML = `<div class="error-card"><strong>⚠ Request Failed</strong><br/>${err.message}</div>`;
+    } finally {
+      btn.disabled = false; btn.classList.remove('pulsing'); btn.textContent = '⚡ Find Leads Now';
+    }
+  }
+
+  function renderResults(data, niche) {
+    const container = document.getElementById('results');
+    const leads = Array.isArray(data) ? data : Array.isArray(data.leads) ? data.leads : [];
+    if (!leads.length) {
+      container.innerHTML = `<div class="error-card">No results found. Try a wider radius or different niche.</div>`;
+      return;
+    }
+    container.innerHTML = `<div class="results-header"><span class="rh-label">Results</span><span class="rh-count">${leads.length} Leads Found</span></div>`;
+    leads.forEach((biz, i) => {
+      const name = biz.title || biz.name || 'Unknown Business';
+      const address = biz.address || biz.street || '—';
+      const phone = biz.phone || biz.phoneNumber || '';
+      const rating = biz.totalScore || biz.rating || '';
+      const reviews = biz.reviewsCount || biz.reviewCount || '';
+      const card = document.createElement('div');
+      card.className = 'lead-card';
+      card.style.animationDelay = `${i * 35}ms`;
+      card.innerHTML = `
+        <div class="niche-badge">${escHtml(niche)}</div>
+        <div class="name">${escHtml(name)}</div>
+        <div class="address">📍 ${escHtml(address)}</div>
+        <div class="bottom-row">
+          <div class="phone">${phone ? '📞 ' + escHtml(phone) : '<span class="no-phone">No phone listed</span>'}</div>
+          ${rating ? `<div class="rating"><span class="star">★</span> ${rating}${reviews ? ' · ' + reviews + ' reviews' : ''}</div>` : ''}
+        </div>`;
+      container.appendChild(card);
+    });
+  }
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('gsa_webhook');
+    if (saved) document.getElementById('webhook-url').value = saved;
+  });
+  document.addEventListener('input', () => {
+    const url = document.getElementById('webhook-url').value;
+    if (url) localStorage.setItem('gsa_webhook', url);
+  });
+</script>
+</body>
+</html>
