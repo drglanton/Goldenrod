@@ -188,6 +188,25 @@
 
   footer { text-align: center; padding: 24px 20px 0; font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: .05em; }
   footer strong { color: var(--gold); }
+
+  /* ── Status buttons ── */
+  .status-row {
+    display: flex; gap: 6px; margin-top: 8px; padding-top: 8px;
+    border-top: 1px solid var(--navy-border);
+  }
+  .status-btn {
+    flex: 1; padding: 7px 4px; border-radius: 6px; border: 1px solid var(--navy-border);
+    background: var(--navy-deep); color: var(--muted); font-family: var(--font-d);
+    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    cursor: pointer; transition: all .15s; text-align: center;
+  }
+  .status-btn:hover { opacity: .85; }
+  .status-btn.visited   { background: rgba(46,204,140,.15); border-color: var(--success); color: var(--success); }
+  .status-btn.interested { background: rgba(245,197,24,.15); border-color: var(--gold); color: var(--gold); }
+  .status-btn.skip      { background: rgba(224,80,80,.15); border-color: var(--danger); color: var(--danger); }
+  .status-btn.active-visited   { background: var(--success); color: var(--navy-deep); border-color: var(--success); }
+  .status-btn.active-interested { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+  .status-btn.active-skip      { background: var(--danger); color: var(--white); border-color: var(--danger); }
 </style>
 </head>
 <body>
@@ -586,6 +605,11 @@
             ${rating ? `<div class="lead-rating"><span class="star">★</span> ${rating}${reviews ? ' · ' + reviews : ''}</div>` : ''}
             ${dist   ? `<div class="lead-dist">${dist} away</div>` : ''}
           </div>
+        </div>
+        <div class="status-row">
+          <button class="status-btn visited" data-status="Visited" onclick="updateStatus('${escHtml(phone)}', 'Visited', this.closest('.lead-card'))">✅ Visited</button>
+          <button class="status-btn interested" data-status="Interested" onclick="updateStatus('${escHtml(phone)}', 'Interested', this.closest('.lead-card'))">🌟 Interested</button>
+          <button class="status-btn skip" data-status="Skip" onclick="updateStatus('${escHtml(phone)}', 'Skip', this.closest('.lead-card'))">❌ Skip</button>
         </div>`;
       container.appendChild(card);
     });
@@ -636,6 +660,42 @@
       document.getElementById('results').innerHTML = `<div class="error-card"><strong>⚠ Quick Search Failed</strong><br/>${err.message}</div>`;
     } finally {
       btn.disabled = false; btn.textContent = '📋 Quick Search';
+    }
+  }
+
+  // ── Status Update ────────────────────────────────
+  const STATUS_URL = 'https://n8n.srv1445265.hstgr.cloud/webhook/update-status';
+
+  async function updateStatus(phone, status, cardEl) {
+    if (!phone) return alert('No phone number to identify this business.');
+    const btns = cardEl.querySelectorAll('.status-btn');
+    btns.forEach(b => b.disabled = true);
+
+    try {
+      const res = await fetch(STATUS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, status })
+      });
+      if (!res.ok) throw new Error('Update failed');
+
+      // Update button visuals
+      btns.forEach(b => {
+        b.classList.remove('active-visited', 'active-interested', 'active-skip');
+      });
+      const activeBtn = cardEl.querySelector(`.status-btn[data-status="${status}"]`);
+      if (activeBtn) activeBtn.classList.add(`active-${status.toLowerCase()}`);
+
+      // Dim card if visited or skip
+      if (status === 'Visited' || status === 'Skip') {
+        cardEl.style.opacity = '0.45';
+      } else {
+        cardEl.style.opacity = '1';
+      }
+    } catch (err) {
+      alert('Could not update status. Check your connection.');
+    } finally {
+      btns.forEach(b => b.disabled = false);
     }
   }
 
