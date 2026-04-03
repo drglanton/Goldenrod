@@ -4,150 +4,181 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GSA Outreach Command</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0a0a0a;
-    --surface: #111111;
-    --surface2: #1a1a1a;
-    --border: #2a2a2a;
-    --gold: #c9a84c;
-    --gold-dim: #7a621e;
-    --green: #3ddc84;
-    --red: #ff4d4d;
-    --muted: #555;
-    --text: #e8e8e8;
-    --text-dim: #888;
+    --navy: #0d1b2a;
+    --navy2: #142236;
+    --navy3: #1a2d45;
+    --border: #1e3450;
+    --gold: #f5c518;
+    --gold-dark: #c49d0e;
+    --white: #ffffff;
+    --text: #e8edf2;
+    --text-dim: #7a9ab8;
+    --green: #2ecc71;
+    --red: #e74c3c;
+    --muted: #3a5068;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--black);
+    background: var(--navy);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Barlow', sans-serif;
     min-height: 100vh;
-    padding: 24px 16px 80px;
+    padding: 0 0 80px;
   }
 
+  /* TOP BAR */
+  .topbar {
+    background: var(--gold);
+    text-align: center;
+    padding: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--navy);
+    text-transform: uppercase;
+  }
+
+  /* HEADER */
   .header {
+    background: var(--navy2);
+    border-bottom: 2px solid var(--gold);
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 32px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
+    align-items: center;
   }
 
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 3px;
-    color: var(--gold);
-  }
+  .logo-block {}
 
-  .logo span {
-    color: var(--text-dim);
-    font-size: 13px;
-    font-family: 'DM Mono', monospace;
-    display: block;
-    letter-spacing: 1px;
-    margin-top: -4px;
-  }
-
-  .date-display {
-    text-align: right;
-    font-family: 'DM Mono', monospace;
+  .logo-agency {
+    font-family: 'Barlow Condensed', sans-serif;
     font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
     color: var(--text-dim);
-    line-height: 1.8;
+    text-transform: uppercase;
   }
 
+  .logo-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .date-block {
+    text-align: right;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    line-height: 1.7;
+  }
+
+  /* CONTENT */
+  .content { padding: 16px 16px; }
+
+  /* DATE TABS */
   .date-tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
+    gap: 6px;
+    margin-bottom: 16px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
   }
 
   .date-tab {
     flex-shrink: 0;
     padding: 6px 14px;
     border-radius: 4px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
     cursor: pointer;
-    border: 1px solid var(--border);
-    background: var(--surface);
+    border: 1.5px solid var(--border);
+    background: var(--navy2);
     color: var(--text-dim);
+    text-transform: uppercase;
     transition: all 0.15s;
   }
 
   .date-tab.active {
     background: var(--gold);
-    color: var(--black);
+    color: var(--navy);
     border-color: var(--gold);
-    font-weight: 500;
   }
 
-  .date-tab:hover:not(.active) { border-color: var(--gold-dim); color: var(--gold); }
+  .date-tab:hover:not(.active) { border-color: var(--gold-dark); color: var(--gold); }
 
+  /* HERO */
   .hero {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    background: var(--navy2);
+    border: 1.5px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: 6px;
     padding: 20px;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 12px;
   }
 
   .hero-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
     color: var(--text-dim);
     text-transform: uppercase;
     margin-bottom: 8px;
   }
 
-  .hero-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+  .hero-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
 
   .hero-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
     line-height: 1;
     color: var(--gold);
   }
 
   .hero-denom {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
     color: var(--muted);
   }
 
   .progress-track {
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 3px;
+    height: 8px;
+    background: var(--navy3);
+    border-radius: 4px;
     overflow: hidden;
     margin-bottom: 8px;
   }
 
   .progress-fill {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
     background: var(--gold);
-    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .progress-fill.over { background: var(--green); }
@@ -156,67 +187,103 @@
   .hero-sub {
     display: flex;
     justify-content: space-between;
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
     color: var(--text-dim);
+    text-transform: uppercase;
   }
 
-  .counter-section {
+  /* COUNTERS */
+  .counter-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 12px;
   }
 
   .counter-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    background: var(--navy2);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
     padding: 16px 12px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.12s;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
   }
 
-  .counter-btn:active { transform: scale(0.96); border-color: var(--gold); }
-  .counter-btn .cb-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; color: var(--text); display: block; }
-  .counter-btn .cb-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-dim); letter-spacing: 1px; display: block; margin-top: 4px; }
-  .counter-btn .cb-tap { font-size: 9px; color: var(--muted); font-family: 'DM Mono', monospace; display: block; margin-top: 6px; }
-  .counter-btn.primary { border-color: var(--gold-dim); }
+  .counter-btn:active { transform: scale(0.95); border-color: var(--gold); background: var(--navy3); }
+
+  .counter-btn.primary { border-color: var(--gold-dark); }
+
+  .cb-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--white);
+    display: block;
+  }
+
   .counter-btn.primary .cb-num { color: var(--gold); }
 
-  .section-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
+  .cb-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 2px;
     color: var(--text-dim);
     text-transform: uppercase;
-    margin-bottom: 10px;
+    display: block;
+    margin-top: 2px;
   }
 
-  .pipeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .cb-tap {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'Barlow', sans-serif;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+
+  /* PIPELINE */
+  .pipeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
 
   .pipe-cell {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    background: var(--navy2);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
     padding: 14px 12px;
   }
-
-  .pipe-cell .pc-num { font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; color: var(--text); display: block; }
-  .pipe-cell .pc-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-dim); display: block; margin-top: 2px; }
-  .pipe-cell.highlight .pc-num { color: var(--green); }
-  .pipe-cell.warn .pc-num { color: var(--gold); }
 
   .pipe-input {
     width: 100%;
     background: transparent;
     border: none;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    color: var(--text);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--white);
     outline: none;
     padding: 0;
     line-height: 1;
@@ -224,37 +291,84 @@
 
   .pipe-input::placeholder { color: var(--muted); }
 
-  .week-table { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .pc-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--white);
+    display: block;
+  }
+
+  .pc-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .pipe-cell.highlight .pc-num,
+  .pipe-cell.highlight .pipe-input { color: var(--green); }
+  .pipe-cell.warn .pipe-input { color: var(--gold); }
+
+  /* WEEKLY TABLE */
+  .week-table {
+    background: var(--navy2);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
 
   .wt-header {
     display: grid;
-    grid-template-columns: 1fr repeat(5, 32px);
-    gap: 4px;
+    grid-template-columns: 1fr repeat(5, 36px);
+    gap: 2px;
     padding: 10px 14px;
-    background: var(--surface2);
+    background: var(--navy3);
     border-bottom: 1px solid var(--border);
   }
 
-  .wt-header span { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; text-align: center; }
+  .wt-header span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
   .wt-header span:first-child { text-align: left; }
 
   .wt-row {
     display: grid;
-    grid-template-columns: 1fr repeat(5, 32px);
-    gap: 4px;
+    grid-template-columns: 1fr repeat(5, 36px);
+    gap: 2px;
     padding: 8px 14px;
     border-bottom: 1px solid var(--border);
     align-items: center;
   }
 
   .wt-row:last-child { border-bottom: none; }
-  .wt-label { font-size: 11px; color: var(--text); font-family: 'DM Sans', sans-serif; }
+
+  .wt-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+  }
 
   .wt-cell {
-    width: 32px;
+    width: 36px;
     text-align: center;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
     background: transparent;
     border: none;
     color: var(--text);
@@ -263,10 +377,17 @@
     border-radius: 3px;
   }
 
-  .wt-cell:focus { background: var(--surface2); color: var(--gold); }
-  .wt-cell.total { color: var(--gold); font-weight: 500; }
+  .wt-cell:focus { background: var(--navy3); color: var(--gold); }
+  .wt-cell.total { color: var(--gold); font-weight: 700; }
 
-  .checklist { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  /* CHECKLIST */
+  .checklist {
+    background: var(--navy2);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
 
   .check-item {
     display: flex;
@@ -280,12 +401,12 @@
   }
 
   .check-item:last-child { border-bottom: none; }
-  .check-item:active { background: var(--surface2); }
+  .check-item:active { background: var(--navy3); }
 
   .check-box {
-    width: 18px;
-    height: 18px;
-    border: 1.5px solid var(--border);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
     border-radius: 3px;
     flex-shrink: 0;
     display: flex;
@@ -294,188 +415,258 @@
     transition: all 0.15s;
   }
 
-  .check-item.done .check-box { background: var(--green); border-color: var(--green); }
-  .check-item.done .check-box::after { content: '✓'; font-size: 11px; color: var(--black); font-weight: 700; }
+  .check-item.done .check-box { background: var(--gold); border-color: var(--gold); }
+  .check-item.done .check-box::after { content: '✓'; font-size: 12px; color: var(--navy); font-weight: 800; }
   .check-item.done .check-text { color: var(--muted); text-decoration: line-through; }
-  .check-text { font-size: 12px; color: var(--text); line-height: 1.4; font-family: 'DM Sans', sans-serif; }
-  .check-time { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); flex-shrink: 0; }
 
+  .check-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .check-time {
+    margin-left: auto;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+
+  /* SYNC BUTTON */
   .sync-btn {
     width: 100%;
     padding: 16px;
     background: var(--gold);
     border: none;
-    border-radius: 8px;
-    color: var(--black);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 2px;
+    border-radius: 6px;
+    color: var(--navy);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     transition: all 0.15s;
   }
 
-  .sync-btn:active { transform: scale(0.98); opacity: 0.9; }
-  .sync-btn:disabled { background: var(--muted); cursor: not-allowed; }
+  .sync-btn:active { transform: scale(0.98); background: var(--gold-dark); }
+  .sync-btn:disabled { background: var(--muted); cursor: not-allowed; color: var(--navy2); }
 
   .sync-status {
     text-align: center;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    margin-bottom: 16px;
-    min-height: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    min-height: 18px;
+    text-transform: uppercase;
   }
 
   .sync-status.ok { color: var(--green); }
   .sync-status.err { color: var(--red); }
   .sync-status.pending { color: var(--gold); }
 
+  /* MOTTO */
   .motto {
     background: var(--gold);
-    color: var(--black);
-    border-radius: 8px;
+    color: var(--navy);
+    border-radius: 6px;
     padding: 16px;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 
-  .motto p { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1px; line-height: 1.4; }
-  .motto small { font-family: 'DM Mono', monospace; font-size: 9px; opacity: 0.7; display: block; margin-top: 4px; }
+  .motto p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
 
+  .motto small {
+    font-family: 'Barlow', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.7;
+    display: block;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* RESET */
   .reset-btn {
     width: 100%;
     padding: 12px;
     background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
     color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     cursor: pointer;
-    letter-spacing: 1px;
   }
 
   .reset-btn:active { color: var(--red); border-color: var(--red); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 16px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+  }
 </style>
 </head>
 <body>
 
+<div class="topbar">GOLDENROD SOLUTIONS AGENCY · OUTREACH COMMAND</div>
+
 <div class="header">
-  <div class="logo">GSA<span>OUTREACH COMMAND</span></div>
-  <div class="date-display" id="dateDisplay"></div>
+  <div class="logo-block">
+    <div class="logo-agency">Goldenrod Solutions Agency</div>
+    <div class="logo-title">GSA</div>
+    <div class="logo-sub">Daily Outreach Tracker</div>
+  </div>
+  <div class="date-block" id="dateDisplay"></div>
 </div>
 
-<div class="date-tabs" id="dateTabs"></div>
+<div class="content">
 
-<div class="hero">
-  <div class="hero-label">TODAY'S OUTREACH</div>
-  <div class="hero-row">
-    <div class="hero-num" id="heroNum">0</div>
-    <div class="hero-denom">/ 100</div>
+  <div class="date-tabs" id="dateTabs"></div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Today's Outreach</div>
+    <div class="hero-row">
+      <div class="hero-num" id="heroNum">0</div>
+      <div class="hero-denom">/ 100</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="heroBar" style="width:0%"></div>
+    </div>
+    <div class="hero-sub">
+      <span id="heroStatus">Get moving — 100 is non-negotiable.</span>
+      <span id="heroPercent">0%</span>
+    </div>
   </div>
-  <div class="progress-track">
-    <div class="progress-fill" id="heroBar" style="width:0%"></div>
+
+  <!-- COUNTERS -->
+  <div class="counter-grid">
+    <div class="counter-btn primary" onclick="increment('sent')">
+      <span class="cb-num" id="sentNum">0</span>
+      <span class="cb-label">Msgs Sent</span>
+      <span class="cb-tap">tap to add +1</span>
+    </div>
+    <div class="counter-btn" onclick="increment('replies')">
+      <span class="cb-num" id="repliesNum">0</span>
+      <span class="cb-label">Replies</span>
+      <span class="cb-tap">tap to add +1</span>
+    </div>
+    <div class="counter-btn" onclick="increment('demos')">
+      <span class="cb-num" id="demosNum">0</span>
+      <span class="cb-label">Demos Sent</span>
+      <span class="cb-tap">tap to add +1</span>
+    </div>
+    <div class="counter-btn" onclick="increment('calls')">
+      <span class="cb-num" id="callsNum">0</span>
+      <span class="cb-label">Calls Booked</span>
+      <span class="cb-tap">tap to add +1</span>
+    </div>
   </div>
-  <div class="hero-sub">
-    <span id="heroStatus">Get moving — 100 is non-negotiable.</span>
-    <span id="heroPercent">0%</span>
+
+  <!-- PIPELINE -->
+  <div class="section-title">Pipeline Status</div>
+  <div class="pipeline-grid">
+    <div class="pipe-cell warn">
+      <input class="pipe-input" id="pipeVSL" type="number" placeholder="0" oninput="savePipe()">
+      <span class="pc-label">VSLs Sent</span>
+    </div>
+    <div class="pipe-cell highlight">
+      <input class="pipe-input" id="pipeClosed" type="number" placeholder="0" oninput="savePipe()">
+      <span class="pc-label">Deals Closed</span>
+    </div>
+    <div class="pipe-cell">
+      <input class="pipe-input" id="pipeCallsConducted" type="number" placeholder="0" oninput="savePipe()">
+      <span class="pc-label">Calls Conducted</span>
+    </div>
+    <div class="pipe-cell highlight">
+      <span class="pc-num" id="mrrNum">$0</span>
+      <span class="pc-label">MRR ($297/mo)</span>
+    </div>
   </div>
+
+  <!-- WEEKLY TABLE -->
+  <div class="section-title">Weekly Numbers</div>
+  <div class="week-table">
+    <div class="wt-header">
+      <span>Metric</span><span>M</span><span>T</span><span>W</span><span>T</span><span>Tot</span>
+    </div>
+    <div class="wt-row">
+      <span class="wt-label">Outreach Sent</span>
+      <input class="wt-cell" data-metric="outreach" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="outreach" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="outreach" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="outreach" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <span class="wt-cell total" id="total-outreach">—</span>
+    </div>
+    <div class="wt-row">
+      <span class="wt-label">Responses</span>
+      <input class="wt-cell" data-metric="responses" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="responses" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="responses" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="responses" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <span class="wt-cell total" id="total-responses">—</span>
+    </div>
+    <div class="wt-row">
+      <span class="wt-label">Demos Sent</span>
+      <input class="wt-cell" data-metric="demos" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="demos" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="demos" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="demos" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <span class="wt-cell total" id="total-demos">—</span>
+    </div>
+    <div class="wt-row">
+      <span class="wt-label">Deals Closed</span>
+      <input class="wt-cell" data-metric="closed" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="closed" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="closed" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <input class="wt-cell" data-metric="closed" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+      <span class="wt-cell total" id="total-closed">—</span>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="section-title">Daily Checklist</div>
+  <div class="checklist" id="checklist"></div>
+
+  <!-- SYNC -->
+  <button class="sync-btn" id="syncBtn" onclick="syncToSheets()">↑ Sync to Google Sheets</button>
+  <div class="sync-status" id="syncStatus"></div>
+
+  <!-- MOTTO -->
+  <div class="motto">
+    <p>The demo sells itself.<br>Your job is to get it in front of people.</p>
+    <small>Yeses give you revenue. Nos give you feedback. Either way, you win.</small>
+  </div>
+
+  <button class="reset-btn" onclick="resetDay()">Reset Today's Counters</button>
+
+  <div class="footer">Goldenrod Solutions Agency · Call or Text Thomas · (678) 271-3775</div>
+
 </div>
-
-<div class="counter-section">
-  <div class="counter-btn primary" onclick="increment('sent')">
-    <span class="cb-num" id="sentNum">0</span>
-    <span class="cb-label">MSGS SENT</span>
-    <span class="cb-tap">TAP TO ADD +1</span>
-  </div>
-  <div class="counter-btn" onclick="increment('replies')">
-    <span class="cb-num" id="repliesNum">0</span>
-    <span class="cb-label">REPLIES</span>
-    <span class="cb-tap">TAP TO ADD +1</span>
-  </div>
-  <div class="counter-btn" onclick="increment('demos')">
-    <span class="cb-num" id="demosNum">0</span>
-    <span class="cb-label">DEMOS SENT</span>
-    <span class="cb-tap">TAP TO ADD +1</span>
-  </div>
-  <div class="counter-btn" onclick="increment('calls')">
-    <span class="cb-num" id="callsNum">0</span>
-    <span class="cb-label">CALLS BOOKED</span>
-    <span class="cb-tap">TAP TO ADD +1</span>
-  </div>
-</div>
-
-<div class="section-title">PIPELINE STATUS</div>
-<div class="pipeline-grid">
-  <div class="pipe-cell warn">
-    <input class="pipe-input" id="pipeVSL" type="number" placeholder="0" oninput="savePipe()">
-    <span class="pc-label">VSLs SENT</span>
-  </div>
-  <div class="pipe-cell highlight">
-    <input class="pipe-input" id="pipeClosed" type="number" placeholder="0" oninput="savePipe()">
-    <span class="pc-label">DEALS CLOSED</span>
-  </div>
-  <div class="pipe-cell">
-    <input class="pipe-input" id="pipeCallsConducted" type="number" placeholder="0" oninput="savePipe()">
-    <span class="pc-label">CALLS CONDUCTED</span>
-  </div>
-  <div class="pipe-cell highlight">
-    <span class="pc-num" id="mrrNum">$0</span>
-    <span class="pc-label">MRR ($297/mo)</span>
-  </div>
-</div>
-
-<div class="section-title">WEEKLY NUMBERS</div>
-<div class="week-table">
-  <div class="wt-header">
-    <span>METRIC</span><span>M</span><span>T</span><span>W</span><span>T</span><span>TOT</span>
-  </div>
-  <div class="wt-row">
-    <span class="wt-label">Outreach Sent</span>
-    <input class="wt-cell" data-metric="outreach" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="outreach" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="outreach" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="outreach" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <span class="wt-cell total" id="total-outreach">—</span>
-  </div>
-  <div class="wt-row">
-    <span class="wt-label">Responses</span>
-    <input class="wt-cell" data-metric="responses" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="responses" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="responses" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="responses" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <span class="wt-cell total" id="total-responses">—</span>
-  </div>
-  <div class="wt-row">
-    <span class="wt-label">Demos Sent</span>
-    <input class="wt-cell" data-metric="demos" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="demos" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="demos" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="demos" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <span class="wt-cell total" id="total-demos">—</span>
-  </div>
-  <div class="wt-row">
-    <span class="wt-label">Deals Closed</span>
-    <input class="wt-cell" data-metric="closed" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="closed" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="closed" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <input class="wt-cell" data-metric="closed" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
-    <span class="wt-cell total" id="total-closed">—</span>
-  </div>
-</div>
-
-<div class="section-title">DAILY CHECKLIST</div>
-<div class="checklist" id="checklist"></div>
-
-<button class="sync-btn" id="syncBtn" onclick="syncToSheets()">↑ SYNC TO GOOGLE SHEETS</button>
-<div class="sync-status" id="syncStatus"></div>
-
-<div class="motto">
-  <p>THE DEMO SELLS ITSELF.<br>YOUR JOB IS TO GET IT IN FRONT OF PEOPLE.</p>
-  <small>YESES GIVE YOU REVENUE. NOS GIVE YOU FEEDBACK. EITHER WAY, YOU WIN.</small>
-</div>
-
-<button class="reset-btn" onclick="resetDay()">RESET TODAY'S COUNTERS</button>
 
 <script>
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwMcYnU0ZV9MNLgkf2m5RyIdA3zDjYtYN-9qg7r8EnijV4Mf116EoB45Bu6OLEGDvJyZw/exec';
@@ -506,149 +697,111 @@ let state = {
 };
 
 function todayKey() { return new Date().toISOString().slice(0, 10); }
-
 function load() {
-  const stored = localStorage.getItem('gsa_state_' + state.date);
-  if (stored) { const p = JSON.parse(stored); state = { ...state, ...p, date: state.date }; }
+  const s = localStorage.getItem('gsa_state_' + state.date);
+  if (s) { const p = JSON.parse(s); state = { ...state, ...p, date: state.date }; }
 }
-
 function save() { localStorage.setItem('gsa_state_' + state.date, JSON.stringify(state)); }
-
 function increment(key) { state[key]++; save(); render(); }
-
 function savePipe() {
   state.pipe.VSL = document.getElementById('pipeVSL').value;
   state.pipe.closed = document.getElementById('pipeClosed').value;
   state.pipe.callsConducted = document.getElementById('pipeCallsConducted').value;
   save(); updateMRR();
 }
-
 function updateMRR() {
-  const closed = parseInt(state.pipe.closed) || 0;
-  document.getElementById('mrrNum').textContent = '$' + (closed * 297).toLocaleString();
+  const c = parseInt(state.pipe.closed) || 0;
+  document.getElementById('mrrNum').textContent = '$' + (c * 297).toLocaleString();
 }
-
-function toggleCheck(idx) { state.checks[idx] = !state.checks[idx]; save(); renderChecklist(); }
-
+function toggleCheck(i) { state.checks[i] = !state.checks[i]; save(); renderChecklist(); }
 function calcWeekly(input) {
-  const metric = input.dataset.metric;
-  let total = 0;
-  document.querySelectorAll(`[data-metric="${metric}"]`).forEach(c => { total += parseInt(c.value) || 0; });
-  const el = document.getElementById('total-' + metric);
-  if (el) el.textContent = total || '—';
+  const m = input.dataset.metric;
+  let t = 0;
+  document.querySelectorAll(`[data-metric="${m}"]`).forEach(c => { t += parseInt(c.value) || 0; });
+  const el = document.getElementById('total-' + m);
+  if (el) el.textContent = t || '—';
   localStorage.setItem('gsa_weekly', JSON.stringify(getWeeklyValues()));
 }
-
 function getWeeklyValues() {
-  const data = {};
-  document.querySelectorAll('.wt-cell[data-metric]').forEach(c => { data[c.dataset.metric + '_' + c.dataset.day] = c.value; });
-  return data;
+  const d = {};
+  document.querySelectorAll('.wt-cell[data-metric]').forEach(c => { d[c.dataset.metric + '_' + c.dataset.day] = c.value; });
+  return d;
 }
-
 function loadWeekly() {
-  const stored = localStorage.getItem('gsa_weekly');
-  if (!stored) return;
-  const data = JSON.parse(stored);
+  const s = localStorage.getItem('gsa_weekly');
+  if (!s) return;
+  const d = JSON.parse(s);
   document.querySelectorAll('.wt-cell[data-metric]').forEach(c => {
-    const key = c.dataset.metric + '_' + c.dataset.day;
-    if (data[key]) { c.value = data[key]; calcWeekly(c); }
+    const k = c.dataset.metric + '_' + c.dataset.day;
+    if (d[k]) { c.value = d[k]; calcWeekly(c); }
   });
 }
-
 async function syncToSheets() {
   const btn = document.getElementById('syncBtn');
   const status = document.getElementById('syncStatus');
-  btn.disabled = true;
-  btn.textContent = 'SYNCING...';
-  status.className = 'sync-status pending';
-  status.textContent = 'Sending to Google Sheets...';
-
-  const payload = {
-    date: state.date,
-    sent: state.sent,
-    replies: state.replies,
-    demos: state.demos,
-    calls: state.calls,
-    vsl: state.pipe.VSL || 0,
-    closed: state.pipe.closed || 0,
-    callsConducted: state.pipe.callsConducted || 0
-  };
-
+  btn.disabled = true; btn.textContent = 'Syncing...';
+  status.className = 'sync-status pending'; status.textContent = 'Sending to Google Sheets...';
   try {
     await fetch(SHEETS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ date: state.date, sent: state.sent, replies: state.replies, demos: state.demos, calls: state.calls, vsl: state.pipe.VSL || 0, closed: state.pipe.closed || 0, callsConducted: state.pipe.callsConducted || 0 })
     });
     status.className = 'sync-status ok';
     status.textContent = '✓ Synced at ' + new Date().toLocaleTimeString();
-    btn.textContent = '✓ SYNCED';
-    setTimeout(() => { btn.textContent = '↑ SYNC TO GOOGLE SHEETS'; btn.disabled = false; }, 3000);
-  } catch (err) {
-    status.className = 'sync-status err';
-    status.textContent = '✗ Sync failed — check your connection.';
-    btn.textContent = '↑ SYNC TO GOOGLE SHEETS';
-    btn.disabled = false;
+    btn.textContent = '✓ Synced';
+    setTimeout(() => { btn.textContent = '↑ Sync to Google Sheets'; btn.disabled = false; }, 3000);
+  } catch (e) {
+    status.className = 'sync-status err'; status.textContent = '✗ Sync failed — check your connection.';
+    btn.textContent = '↑ Sync to Google Sheets'; btn.disabled = false;
   }
 }
-
 function render() {
-  const sent = state.sent;
-  document.getElementById('heroNum').textContent = sent;
-  document.getElementById('sentNum').textContent = sent;
+  const s = state.sent;
+  document.getElementById('heroNum').textContent = s;
+  document.getElementById('sentNum').textContent = s;
   document.getElementById('repliesNum').textContent = state.replies;
   document.getElementById('demosNum').textContent = state.demos;
   document.getElementById('callsNum').textContent = state.calls;
-
-  const pct = Math.min(Math.round((sent / 100) * 100), 100);
+  const pct = Math.min(Math.round((s / 100) * 100), 100);
   const bar = document.getElementById('heroBar');
   bar.style.width = pct + '%';
-  bar.className = 'progress-fill' + (pct >= 100 ? ' over' : sent < 30 ? ' low' : '');
+  bar.className = 'progress-fill' + (pct >= 100 ? ' over' : s < 30 ? ' low' : '');
   document.getElementById('heroPercent').textContent = pct + '%';
-
-  let statusText = 'Get moving — 100 is non-negotiable.';
-  if (sent >= 100) statusText = '✓ Target hit. Now follow up.';
-  else if (sent >= 50) statusText = 'Halfway. Keep the momentum.';
-  else if (sent >= 20) statusText = 'Warming up. Push harder.';
-  document.getElementById('heroStatus').textContent = statusText;
-
+  let st = 'Get moving — 100 is non-negotiable.';
+  if (s >= 100) st = '✓ Target hit. Now follow up.';
+  else if (s >= 50) st = 'Halfway there. Keep pushing.';
+  else if (s >= 20) st = 'Warming up. Push harder.';
+  document.getElementById('heroStatus').textContent = st;
   document.getElementById('pipeVSL').value = state.pipe.VSL || '';
   document.getElementById('pipeClosed').value = state.pipe.closed || '';
   document.getElementById('pipeCallsConducted').value = state.pipe.callsConducted || '';
-  updateMRR();
-  renderChecklist();
+  updateMRR(); renderChecklist();
 }
-
 function renderChecklist() {
-  const container = document.getElementById('checklist');
-  container.innerHTML = '';
+  const c = document.getElementById('checklist'); c.innerHTML = '';
   CHECKLIST_ITEMS.forEach((item, i) => {
     const done = !!state.checks[i];
     const div = document.createElement('div');
     div.className = 'check-item' + (done ? ' done' : '');
     div.onclick = () => toggleCheck(i);
     div.innerHTML = `<div class="check-box"></div><span class="check-text">${item.text}</span><span class="check-time">${item.time}</span>`;
-    container.appendChild(div);
+    c.appendChild(div);
   });
 }
-
 function resetDay() {
   if (!confirm('Reset today\'s counters?')) return;
   state.sent = 0; state.replies = 0; state.demos = 0; state.calls = 0; state.checks = {};
   save(); render();
 }
-
 function renderDateDisplay() {
-  const now = new Date();
+  const n = new Date();
   document.getElementById('dateDisplay').innerHTML =
-    now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + '<br>' +
-    now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    n.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + '<br>' +
+    n.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
-
 function renderDateTabs() {
-  const container = document.getElementById('dateTabs');
-  container.innerHTML = '';
+  const c = document.getElementById('dateTabs'); c.innerHTML = '';
   for (let i = 4; i >= 0; i--) {
     const d = new Date(); d.setDate(d.getDate() - i);
     const key = d.toISOString().slice(0, 10);
@@ -656,20 +809,14 @@ function renderDateTabs() {
     tab.className = 'date-tab' + (key === state.date ? ' active' : '');
     tab.textContent = i === 0 ? 'Today' : d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
     tab.onclick = () => switchDate(key);
-    container.appendChild(tab);
+    c.appendChild(tab);
   }
 }
-
 function switchDate(key) {
   state = { date: key, sent: 0, replies: 0, demos: 0, calls: 0, checks: {}, pipe: { VSL: '', closed: '', callsConducted: '' } };
   load(); renderDateTabs(); render();
 }
-
-load();
-renderDateDisplay();
-renderDateTabs();
-render();
-loadWeekly();
+load(); renderDateDisplay(); renderDateTabs(); render(); loadWeekly();
 setInterval(renderDateDisplay, 60000);
 </script>
 </body>
