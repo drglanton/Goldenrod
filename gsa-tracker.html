@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSA Outreach Command</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #2a2a2a;
+    --gold: #c9a84c;
+    --gold-dim: #7a621e;
+    --green: #3ddc84;
+    --red: #ff4d4d;
+    --muted: #555;
+    --text: #e8e8e8;
+    --text-dim: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 80px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--gold);
+  }
+
+  .logo span {
+    color: var(--text-dim);
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    display: block;
+    letter-spacing: 1px;
+    margin-top: -4px;
+  }
+
+  .date-display {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .date-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .date-tab {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    transition: all 0.15s;
+  }
+
+  .date-tab.active {
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+    font-weight: 500;
+  }
+
+  .date-tab:hover:not(.active) { border-color: var(--gold-dim); color: var(--gold); }
+
+  .hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+
+  .hero-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .hero-denom {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--muted);
+  }
+
+  .progress-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--gold);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .progress-fill.over { background: var(--green); }
+  .progress-fill.low { background: var(--red); }
+
+  .hero-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-dim);
+  }
+
+  .counter-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .counter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .counter-btn:active { transform: scale(0.96); border-color: var(--gold); }
+  .counter-btn .cb-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; color: var(--text); display: block; }
+  .counter-btn .cb-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-dim); letter-spacing: 1px; display: block; margin-top: 4px; }
+  .counter-btn .cb-tap { font-size: 9px; color: var(--muted); font-family: 'DM Mono', monospace; display: block; margin-top: 6px; }
+  .counter-btn.primary { border-color: var(--gold-dim); }
+  .counter-btn.primary .cb-num { color: var(--gold); }
+
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .pipeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+
+  .pipe-cell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 12px;
+  }
+
+  .pipe-cell .pc-num { font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; color: var(--text); display: block; }
+  .pipe-cell .pc-label { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-dim); display: block; margin-top: 2px; }
+  .pipe-cell.highlight .pc-num { color: var(--green); }
+  .pipe-cell.warn .pc-num { color: var(--gold); }
+
+  .pipe-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--text);
+    outline: none;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .pipe-input::placeholder { color: var(--muted); }
+
+  .week-table { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+
+  .wt-header {
+    display: grid;
+    grid-template-columns: 1fr repeat(5, 32px);
+    gap: 4px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .wt-header span { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; text-align: center; }
+  .wt-header span:first-child { text-align: left; }
+
+  .wt-row {
+    display: grid;
+    grid-template-columns: 1fr repeat(5, 32px);
+    gap: 4px;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+
+  .wt-row:last-child { border-bottom: none; }
+  .wt-label { font-size: 11px; color: var(--text); font-family: 'DM Sans', sans-serif; }
+
+  .wt-cell {
+    width: 32px;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    outline: none;
+    padding: 4px 0;
+    border-radius: 3px;
+  }
+
+  .wt-cell:focus { background: var(--surface2); color: var(--gold); }
+  .wt-cell.total { color: var(--gold); font-weight: 500; }
+
+  .checklist { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .check-item:last-child { border-bottom: none; }
+  .check-item:active { background: var(--surface2); }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .check-item.done .check-box { background: var(--green); border-color: var(--green); }
+  .check-item.done .check-box::after { content: '✓'; font-size: 11px; color: var(--black); font-weight: 700; }
+  .check-item.done .check-text { color: var(--muted); text-decoration: line-through; }
+  .check-text { font-size: 12px; color: var(--text); line-height: 1.4; font-family: 'DM Sans', sans-serif; }
+  .check-time { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); flex-shrink: 0; }
+
+  .sync-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    border: none;
+    border-radius: 8px;
+    color: var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.15s;
+  }
+
+  .sync-btn:active { transform: scale(0.98); opacity: 0.9; }
+  .sync-btn:disabled { background: var(--muted); cursor: not-allowed; }
+
+  .sync-status {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    margin-bottom: 16px;
+    min-height: 16px;
+  }
+
+  .sync-status.ok { color: var(--green); }
+  .sync-status.err { color: var(--red); }
+  .sync-status.pending { color: var(--gold); }
+
+  .motto {
+    background: var(--gold);
+    color: var(--black);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .motto p { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1px; line-height: 1.4; }
+  .motto small { font-family: 'DM Mono', monospace; font-size: 9px; opacity: 0.7; display: block; margin-top: 4px; }
+
+  .reset-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  .reset-btn:active { color: var(--red); border-color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">GSA<span>OUTREACH COMMAND</span></div>
+  <div class="date-display" id="dateDisplay"></div>
+</div>
+
+<div class="date-tabs" id="dateTabs"></div>
+
+<div class="hero">
+  <div class="hero-label">TODAY'S OUTREACH</div>
+  <div class="hero-row">
+    <div class="hero-num" id="heroNum">0</div>
+    <div class="hero-denom">/ 100</div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="heroBar" style="width:0%"></div>
+  </div>
+  <div class="hero-sub">
+    <span id="heroStatus">Get moving — 100 is non-negotiable.</span>
+    <span id="heroPercent">0%</span>
+  </div>
+</div>
+
+<div class="counter-section">
+  <div class="counter-btn primary" onclick="increment('sent')">
+    <span class="cb-num" id="sentNum">0</span>
+    <span class="cb-label">MSGS SENT</span>
+    <span class="cb-tap">TAP TO ADD +1</span>
+  </div>
+  <div class="counter-btn" onclick="increment('replies')">
+    <span class="cb-num" id="repliesNum">0</span>
+    <span class="cb-label">REPLIES</span>
+    <span class="cb-tap">TAP TO ADD +1</span>
+  </div>
+  <div class="counter-btn" onclick="increment('demos')">
+    <span class="cb-num" id="demosNum">0</span>
+    <span class="cb-label">DEMOS SENT</span>
+    <span class="cb-tap">TAP TO ADD +1</span>
+  </div>
+  <div class="counter-btn" onclick="increment('calls')">
+    <span class="cb-num" id="callsNum">0</span>
+    <span class="cb-label">CALLS BOOKED</span>
+    <span class="cb-tap">TAP TO ADD +1</span>
+  </div>
+</div>
+
+<div class="section-title">PIPELINE STATUS</div>
+<div class="pipeline-grid">
+  <div class="pipe-cell warn">
+    <input class="pipe-input" id="pipeVSL" type="number" placeholder="0" oninput="savePipe()">
+    <span class="pc-label">VSLs SENT</span>
+  </div>
+  <div class="pipe-cell highlight">
+    <input class="pipe-input" id="pipeClosed" type="number" placeholder="0" oninput="savePipe()">
+    <span class="pc-label">DEALS CLOSED</span>
+  </div>
+  <div class="pipe-cell">
+    <input class="pipe-input" id="pipeCallsConducted" type="number" placeholder="0" oninput="savePipe()">
+    <span class="pc-label">CALLS CONDUCTED</span>
+  </div>
+  <div class="pipe-cell highlight">
+    <span class="pc-num" id="mrrNum">$0</span>
+    <span class="pc-label">MRR ($297/mo)</span>
+  </div>
+</div>
+
+<div class="section-title">WEEKLY NUMBERS</div>
+<div class="week-table">
+  <div class="wt-header">
+    <span>METRIC</span><span>M</span><span>T</span><span>W</span><span>T</span><span>TOT</span>
+  </div>
+  <div class="wt-row">
+    <span class="wt-label">Outreach Sent</span>
+    <input class="wt-cell" data-metric="outreach" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="outreach" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="outreach" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="outreach" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <span class="wt-cell total" id="total-outreach">—</span>
+  </div>
+  <div class="wt-row">
+    <span class="wt-label">Responses</span>
+    <input class="wt-cell" data-metric="responses" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="responses" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="responses" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="responses" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <span class="wt-cell total" id="total-responses">—</span>
+  </div>
+  <div class="wt-row">
+    <span class="wt-label">Demos Sent</span>
+    <input class="wt-cell" data-metric="demos" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="demos" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="demos" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="demos" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <span class="wt-cell total" id="total-demos">—</span>
+  </div>
+  <div class="wt-row">
+    <span class="wt-label">Deals Closed</span>
+    <input class="wt-cell" data-metric="closed" data-day="0" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="closed" data-day="1" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="closed" data-day="2" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <input class="wt-cell" data-metric="closed" data-day="3" type="number" placeholder="—" oninput="calcWeekly(this)">
+    <span class="wt-cell total" id="total-closed">—</span>
+  </div>
+</div>
+
+<div class="section-title">DAILY CHECKLIST</div>
+<div class="checklist" id="checklist"></div>
+
+<button class="sync-btn" id="syncBtn" onclick="syncToSheets()">↑ SYNC TO GOOGLE SHEETS</button>
+<div class="sync-status" id="syncStatus"></div>
+
+<div class="motto">
+  <p>THE DEMO SELLS ITSELF.<br>YOUR JOB IS TO GET IT IN FRONT OF PEOPLE.</p>
+  <small>YESES GIVE YOU REVENUE. NOS GIVE YOU FEEDBACK. EITHER WAY, YOU WIN.</small>
+</div>
+
+<button class="reset-btn" onclick="resetDay()">RESET TODAY'S COUNTERS</button>
+
+<script>
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwMcYnU0ZV9MNLgkf2m5RyIdA3zDjYtYN-9qg7r8EnijV4Mf116EoB45Bu6OLEGDvJyZw/exec';
+
+const CHECKLIST_ITEMS = [
+  { text: "Pull 100 contacts for today's outreach", time: "8:00 AM" },
+  { text: "Research each contact (30 sec — find something personal)", time: "8:00 AM" },
+  { text: "Send Batch 1: 50 opening messages", time: "8–9 AM" },
+  { text: "Send Batch 2: 50 opening messages", time: "9–10 AM" },
+  { text: "Follow up on Day 2 contacts (second touch)", time: "12 PM" },
+  { text: "Follow up on Day 3 contacts (final touch)", time: "12 PM" },
+  { text: "Respond to all replies within 2 hours", time: "Ongoing" },
+  { text: "Use ACA framework in conversations", time: "Ongoing" },
+  { text: "Make indirect ask ('do you know anyone...')", time: "Ongoing" },
+  { text: "Collect business info from interested prospects", time: "Ongoing" },
+  { text: "Build and send demo bots", time: "As needed" },
+  { text: "Follow up on demos sent 1–2 days ago + send VSL", time: "5 PM" },
+  { text: "Book close calls with prospects who watched VSL", time: "5 PM" },
+  { text: "Conduct close calls", time: "Scheduled" },
+  { text: "Update tomorrow's contact list", time: "6 PM" },
+];
+
+let state = {
+  date: todayKey(),
+  sent: 0, replies: 0, demos: 0, calls: 0,
+  checks: {},
+  pipe: { VSL: '', closed: '', callsConducted: '' }
+};
+
+function todayKey() { return new Date().toISOString().slice(0, 10); }
+
+function load() {
+  const stored = localStorage.getItem('gsa_state_' + state.date);
+  if (stored) { const p = JSON.parse(stored); state = { ...state, ...p, date: state.date }; }
+}
+
+function save() { localStorage.setItem('gsa_state_' + state.date, JSON.stringify(state)); }
+
+function increment(key) { state[key]++; save(); render(); }
+
+function savePipe() {
+  state.pipe.VSL = document.getElementById('pipeVSL').value;
+  state.pipe.closed = document.getElementById('pipeClosed').value;
+  state.pipe.callsConducted = document.getElementById('pipeCallsConducted').value;
+  save(); updateMRR();
+}
+
+function updateMRR() {
+  const closed = parseInt(state.pipe.closed) || 0;
+  document.getElementById('mrrNum').textContent = '$' + (closed * 297).toLocaleString();
+}
+
+function toggleCheck(idx) { state.checks[idx] = !state.checks[idx]; save(); renderChecklist(); }
+
+function calcWeekly(input) {
+  const metric = input.dataset.metric;
+  let total = 0;
+  document.querySelectorAll(`[data-metric="${metric}"]`).forEach(c => { total += parseInt(c.value) || 0; });
+  const el = document.getElementById('total-' + metric);
+  if (el) el.textContent = total || '—';
+  localStorage.setItem('gsa_weekly', JSON.stringify(getWeeklyValues()));
+}
+
+function getWeeklyValues() {
+  const data = {};
+  document.querySelectorAll('.wt-cell[data-metric]').forEach(c => { data[c.dataset.metric + '_' + c.dataset.day] = c.value; });
+  return data;
+}
+
+function loadWeekly() {
+  const stored = localStorage.getItem('gsa_weekly');
+  if (!stored) return;
+  const data = JSON.parse(stored);
+  document.querySelectorAll('.wt-cell[data-metric]').forEach(c => {
+    const key = c.dataset.metric + '_' + c.dataset.day;
+    if (data[key]) { c.value = data[key]; calcWeekly(c); }
+  });
+}
+
+async function syncToSheets() {
+  const btn = document.getElementById('syncBtn');
+  const status = document.getElementById('syncStatus');
+  btn.disabled = true;
+  btn.textContent = 'SYNCING...';
+  status.className = 'sync-status pending';
+  status.textContent = 'Sending to Google Sheets...';
+
+  const payload = {
+    date: state.date,
+    sent: state.sent,
+    replies: state.replies,
+    demos: state.demos,
+    calls: state.calls,
+    vsl: state.pipe.VSL || 0,
+    closed: state.pipe.closed || 0,
+    callsConducted: state.pipe.callsConducted || 0
+  };
+
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    status.className = 'sync-status ok';
+    status.textContent = '✓ Synced at ' + new Date().toLocaleTimeString();
+    btn.textContent = '✓ SYNCED';
+    setTimeout(() => { btn.textContent = '↑ SYNC TO GOOGLE SHEETS'; btn.disabled = false; }, 3000);
+  } catch (err) {
+    status.className = 'sync-status err';
+    status.textContent = '✗ Sync failed — check your connection.';
+    btn.textContent = '↑ SYNC TO GOOGLE SHEETS';
+    btn.disabled = false;
+  }
+}
+
+function render() {
+  const sent = state.sent;
+  document.getElementById('heroNum').textContent = sent;
+  document.getElementById('sentNum').textContent = sent;
+  document.getElementById('repliesNum').textContent = state.replies;
+  document.getElementById('demosNum').textContent = state.demos;
+  document.getElementById('callsNum').textContent = state.calls;
+
+  const pct = Math.min(Math.round((sent / 100) * 100), 100);
+  const bar = document.getElementById('heroBar');
+  bar.style.width = pct + '%';
+  bar.className = 'progress-fill' + (pct >= 100 ? ' over' : sent < 30 ? ' low' : '');
+  document.getElementById('heroPercent').textContent = pct + '%';
+
+  let statusText = 'Get moving — 100 is non-negotiable.';
+  if (sent >= 100) statusText = '✓ Target hit. Now follow up.';
+  else if (sent >= 50) statusText = 'Halfway. Keep the momentum.';
+  else if (sent >= 20) statusText = 'Warming up. Push harder.';
+  document.getElementById('heroStatus').textContent = statusText;
+
+  document.getElementById('pipeVSL').value = state.pipe.VSL || '';
+  document.getElementById('pipeClosed').value = state.pipe.closed || '';
+  document.getElementById('pipeCallsConducted').value = state.pipe.callsConducted || '';
+  updateMRR();
+  renderChecklist();
+}
+
+function renderChecklist() {
+  const container = document.getElementById('checklist');
+  container.innerHTML = '';
+  CHECKLIST_ITEMS.forEach((item, i) => {
+    const done = !!state.checks[i];
+    const div = document.createElement('div');
+    div.className = 'check-item' + (done ? ' done' : '');
+    div.onclick = () => toggleCheck(i);
+    div.innerHTML = `<div class="check-box"></div><span class="check-text">${item.text}</span><span class="check-time">${item.time}</span>`;
+    container.appendChild(div);
+  });
+}
+
+function resetDay() {
+  if (!confirm('Reset today\'s counters?')) return;
+  state.sent = 0; state.replies = 0; state.demos = 0; state.calls = 0; state.checks = {};
+  save(); render();
+}
+
+function renderDateDisplay() {
+  const now = new Date();
+  document.getElementById('dateDisplay').innerHTML =
+    now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + '<br>' +
+    now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
+
+function renderDateTabs() {
+  const container = document.getElementById('dateTabs');
+  container.innerHTML = '';
+  for (let i = 4; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const tab = document.createElement('div');
+    tab.className = 'date-tab' + (key === state.date ? ' active' : '');
+    tab.textContent = i === 0 ? 'Today' : d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
+    tab.onclick = () => switchDate(key);
+    container.appendChild(tab);
+  }
+}
+
+function switchDate(key) {
+  state = { date: key, sent: 0, replies: 0, demos: 0, calls: 0, checks: {}, pipe: { VSL: '', closed: '', callsConducted: '' } };
+  load(); renderDateTabs(); render();
+}
+
+load();
+renderDateDisplay();
+renderDateTabs();
+render();
+loadWeekly();
+setInterval(renderDateDisplay, 60000);
+</script>
+</body>
+</html>
