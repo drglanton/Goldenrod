@@ -878,10 +878,11 @@ async function runLoadingSequence() {
   try {
     await fetch(WEBHOOK_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-  } catch(e) { console.log('Webhook error:', e); }
+  } catch(e) { console.log('Webhook fire attempted:', e.message); }
 
   // Init chat message
   messages = [{ role:'bot', text:`Hi there! I'm your ${answers.company||'business'} AI assistant. Ask me anything about your services — I'm here to help.` }];
@@ -1259,18 +1260,17 @@ async function callAI(userText) {
   const sysprompt = `You are a friendly, knowledgeable AI assistant for ${co}, a ${type} in the ${answers.timezone||'US'} timezone. Help answer questions about their services concisely and warmly. Keep replies to 2-3 sentences. If asked about booking, direct them to the "How it Works" tab.`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://n8n.srv1445265.hstgr.cloud/webhook/chat-proxy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
         system: sysprompt,
-        messages: chatHistory
+        messages: chatHistory,
+        userText: userText
       })
     });
     const data = await res.json();
-    const reply = data.content?.[0]?.text || "I'd love to help — what would you like to know about our services?";
+    const reply = data.reply || data.content || data.text || "I'd love to help — what would you like to know about our services?";
     removeTyping();
     chatHistory.push({ role:'assistant', content: reply });
     addMsg('bot', reply);
