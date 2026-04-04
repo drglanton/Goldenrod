@@ -1021,15 +1021,24 @@ async function startCall() {
 
     // Get Retell access token (required for all web calls)
     if (status) status.textContent = 'Connecting...';
-    // Call n8n proxy — keeps Retell API key server-side, passes dynamic variables
-    const tokenRes = await fetch(RETELL_TOKEN_URL, {
+    // Call Retell directly to get web call access token
+    // create-web-call only returns a one-time session token — safe to call from browser
+    const tokenRes = await fetch('https://api.retellai.com/v2/create-web-call', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer key_dda083980d2bbb79c9600d6a5ed7'
+      },
       body: JSON.stringify({
-        company: answers.company || '',
-        type: answers.type || '',
-        name: answers.name || '',
-        timezone: answers.timezone || 'Eastern (ET)'
+        agent_id: RETELL_AGENT_ID,
+        retell_llm_dynamic_variables: {
+          company_name: answers.company || 'your company',
+          company_type: answers.type || 'business',
+          contact_first_name: (answers.name || 'there').split(' ')[0],
+          date_context: new Date().toLocaleDateString('en-US', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+          })
+        }
       })
     });
     if (!tokenRes.ok) throw new Error('Could not get call token: ' + tokenRes.status);
